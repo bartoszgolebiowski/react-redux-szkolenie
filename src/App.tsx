@@ -1,10 +1,11 @@
 import React from "react";
 import { fetchProducts } from "./features/counter/counterSlice";
 import { useAppDispatch, useAppSelector } from "./hooks";
+import Product from "./SingleProduct";
 
 function App() {
   const dispatch = useAppDispatch();
-  const store = useAppSelector((state) => state);
+  const data = useAppSelector((state) => state.counter.data);
 
   React.useEffect(() => {
     dispatch(fetchProducts());
@@ -12,7 +13,11 @@ function App() {
 
   return (
     <div>
-      <div>{JSON.stringify(store)}</div>
+      <div>
+        {data.map((singleElement) => {
+          return <Product product={singleElement} />;
+        })}
+      </div>
     </div>
   );
 }
