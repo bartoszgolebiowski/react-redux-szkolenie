@@ -4,8 +4,10 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
+import { CardHeader, Avatar, Button } from "@material-ui/core";
+import { addToCart } from "./features/counter/counterSlice";
 import { TrendingProduct } from "./product";
-import { CardHeader, Avatar, CardMedia } from "@material-ui/core";
+import { useAppDispatch } from "./hooks";
 
 type Props = {
   product: TrendingProduct;
@@ -29,9 +31,12 @@ const useStyles = makeStyles({
     marginBottom: 12,
   },
 });
-
 const SingleProduct = (props: Props) => {
   const classes = useStyles();
+  const dispatch = useAppDispatch();
+  const addToCartFun = () => {
+    dispatch(addToCart(props.product));
+  };
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -46,7 +51,9 @@ const SingleProduct = (props: Props) => {
       <CardContent>
         <Typography>{props.product.description.slice(0, 100)}</Typography>
       </CardContent>
-      <CardActions></CardActions>
+      <CardActions>
+        <Button onClick={addToCartFun}>Add</Button>
+      </CardActions>
     </Card>
   );
 };
