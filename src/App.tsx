@@ -9,6 +9,13 @@ function App() {
   React.useEffect(() => {
     dispatch(fetchProducts());
   }, []);
+
+  React.useEffect(() => {
+    if (cart.length) {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+  }, [cart]);
+
   return (
     <div>
       <div>

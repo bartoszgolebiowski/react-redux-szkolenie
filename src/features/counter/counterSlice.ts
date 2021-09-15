@@ -14,7 +14,7 @@ const initialState: CounterState = {
   isLoading: false,
   isError: false,
   data: [],
-  cart: [],
+  cart: JSON.parse(localStorage.getItem("cart") || "[]"),
 };
 export const fetchProducts = createAsyncThunk(
   "counter/fetchProducts",
