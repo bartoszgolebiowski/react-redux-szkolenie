@@ -10,10 +10,11 @@ import { CardHeader, Avatar, CardMedia } from "@material-ui/core";
 type Props = {
   product: TrendingProduct;
 };
+
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
-    maxWidth: 800,
+    maxWidth: 500,
     margin: "2rem auto",
   },
   bullet: {
@@ -28,6 +29,7 @@ const useStyles = makeStyles({
     marginBottom: 12,
   },
 });
+
 const SingleProduct = (props: Props) => {
   const classes = useStyles();
   return (
@@ -37,9 +39,9 @@ const SingleProduct = (props: Props) => {
         title={props.product.title}
         subheader={props.product.price}
       />
-      <CardMedia
-        image={props.product.Images[0].url_170x135}
-        title={props.product.title}
+      <img
+        alt={props.product.title}
+        src={props.product.Images[0].url_170x135}
       />
       <CardContent>
         <Typography>{props.product.description.slice(0, 100)}</Typography>
