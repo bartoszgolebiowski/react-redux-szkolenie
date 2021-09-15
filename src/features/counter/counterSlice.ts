@@ -1,22 +1,21 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { getTrendingProducts, TrendingProduct } from "../../product";
-
 export interface CounterState {
   value: number;
   prevValue: number;
   isLoading: boolean;
   isError: boolean;
   data: TrendingProduct[];
+  cart: TrendingProduct[];
 }
-
 const initialState: CounterState = {
   value: 0,
   prevValue: 0,
   isLoading: false,
   isError: false,
   data: [],
+  cart: [],
 };
-
 // First, create the thunk :)
 export const fetchProducts = createAsyncThunk(
   "counter/fetchProducts",
@@ -24,7 +23,6 @@ export const fetchProducts = createAsyncThunk(
     return getTrendingProducts();
   }
 );
-
 export const counterSlice = createSlice({
   name: "counter",
   initialState,
@@ -40,6 +38,9 @@ export const counterSlice = createSlice({
     incrementByAmount: (state, action: PayloadAction<number>) => {
       state.prevValue = state.value;
       state.value += action.payload;
+    },
+    addToCart: (state, action: PayloadAction<TrendingProduct>) => {
+      state.cart.push(action.payload);
     },
   },
   extraReducers: (builder) => {
@@ -62,5 +63,6 @@ export const counterSlice = createSlice({
       });
   },
 });
-export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+export const { increment, decrement, incrementByAmount, addToCart } =
+  counterSlice.actions;
 export default counterSlice.reducer;
