@@ -16,7 +16,6 @@ const initialState: CounterState = {
   data: [],
   cart: [],
 };
-// First, create the thunk :)
 export const fetchProducts = createAsyncThunk(
   "counter/fetchProducts",
   async () => {
@@ -42,6 +41,11 @@ export const counterSlice = createSlice({
     addToCart: (state, action: PayloadAction<TrendingProduct>) => {
       state.cart.push(action.payload);
     },
+    removeFromCart: (state, action: PayloadAction<number>) => {
+      state.cart = state.cart.filter(
+        (product) => product.listing_id !== action.payload
+      );
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -49,7 +53,6 @@ export const counterSlice = createSlice({
         state.isLoading = true;
         state.isError = false;
         state.data = [];
-        //console.log(action);
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -63,6 +66,11 @@ export const counterSlice = createSlice({
       });
   },
 });
-export const { increment, decrement, incrementByAmount, addToCart } =
-  counterSlice.actions;
+export const {
+  increment,
+  decrement,
+  incrementByAmount,
+  addToCart,
+  removeFromCart,
+} = counterSlice.actions;
 export default counterSlice.reducer;

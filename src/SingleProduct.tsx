@@ -5,14 +5,13 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { CardHeader, Avatar, Button } from "@material-ui/core";
-import { addToCart } from "./features/counter/counterSlice";
 import { TrendingProduct } from "./product";
 import { useAppDispatch } from "./hooks";
-
+import { addToCart, removeFromCart } from "./features/counter/counterSlice";
 type Props = {
   product: TrendingProduct;
+  isProduct: boolean;
 };
-
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
@@ -34,8 +33,11 @@ const useStyles = makeStyles({
 const SingleProduct = (props: Props) => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
-  const addToCartFun = () => {
+  const addProductToCard = () => {
     dispatch(addToCart(props.product));
+  };
+  const removeProductFromCard = () => {
+    dispatch(removeFromCart(props.product.listing_id));
   };
   return (
     <Card className={classes.root}>
@@ -52,7 +54,11 @@ const SingleProduct = (props: Props) => {
         <Typography>{props.product.description.slice(0, 100)}</Typography>
       </CardContent>
       <CardActions>
-        <Button onClick={addToCartFun}>Add</Button>
+        {props.isProduct ? (
+          <Button onClick={addProductToCard}>Add</Button>
+        ) : (
+          <Button onClick={removeProductFromCard}>Remove</Button>
+        )}
       </CardActions>
     </Card>
   );
